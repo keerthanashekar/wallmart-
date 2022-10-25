@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">''
+    </head>
+    <body style ="background-color: #fbff00; background-image: url('https://img.freepik.com/premium-photo/cracked-glass-isolated-black-background-broken_153912-1088.jpg');"><!--inline css-->
+          <div class ="container">
+           <h1 style="text-align: center;background-color: #ffffff;" >Walmart Visitor Counter  </h1>
+           <br><br>
+           <div class="row">
+            <div class="col-6">
+              <img src="https://i.pinimg.com/originals/fd/f4/39/fdf439269523e1e3360c0279f0e966f7.jpg" style="width:550" height="400">
+            </div>
+            <div class="col-6">
+                <!-- form elements starts-->
+             
+                <p> 
+                    <label style="color:aliceblue"> GENDER</label>
+                    <select class ="form-control"
+                    style width="80%" id='gender'>
+                    <option value="0" disabled 
+                    selected>--select-- </option>
+                    <option value="1">MALE</option> </option>
+                    <option value="2"> FEMALE</option>
+                </select>
+                <span id="errGender" style="color:red;"></span>
+               </p>
+                
+                 <p>
+                    <label style="color:aliceblue"> AGE GROUP</label>
+                 <select class ="form-control"
+                 style width="100%" id="age">
+                 <option value="0" disabled 
+                 selected>-- select --                                                                                                <span id="errAge" style="color:red;"></span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </option>
+                 <option value="1"> 5-12(kid boy)</option>
+                 <option value="2"> 5-12(kid girl)</option>
+                 <option value="3"> 13-19(Teen girl)</option>
+                 <option value="4"> 13-19(Teen girl)</option>
+                 <option value="5"> 20-30(youngster male)</option>
+                 <option value="6"> 20-30(youngster female)</option>
+                 <option value="7" >31-60(adult female)</option>
+                 <option value="8" >31-60(adult male)</option>
+                 <option value="9"> 61-100(senior citizen male)</option>
+                 <option value="10"> 61-100(senior citizen female)</option>
+                 </p>
+                 
+                
+             </select>
+             <span id="errAge" style="color:red;"></span>
+
+             <p>
+                <label style="color:aliceblue"> COMMENT</label><BR>
+                  <!--select class ="form-control"
+                 style width="100%" id="comment"--></select>
+                 <input type="text" id="comment" name="comment" style="width:100%; height:50;">
+                 <span id="errComment" style="color:red;"></span>
+                  
+             </p>
+
+             <p>
+              <button type="button" class="btn btn-danger"style="width:100%" onclick="validateform()">submit</button>
+              <span id="successMessage" style="color:rgb(75, 248, 23);"></span>
+             </p>
+
+            
+           </div>
+             
+
+
+
+          </div>
+<script>
+  function validateform()
+    {
+      //fetch the value from gender select
+      var gender=document.getElementById('gender').value
+      //check whether gender is selected or not 
+      if(gender==0)
+      {
+        document.getElementById('errGender').innerHTML='Please Select Gender';
+        return false;
+                    }
+                    else
+                    {
+                        document.getElementById('errGender').innerHTML='';
+                    }
+
+                    var age =document.getElementById('age').value
+      //check whether gender is selected or not 
+      if(age==0)
+      {
+        document.getElementById('errAge').innerHTML='Please Select age';
+        return false;
+                    }
+                    else
+                    {
+                        document.getElementById('errAge').innerHTML='';
+                    }
+                    var comment= document.getElementById('comment').value
+                    var regxComment=/^[A-Za-z0-9]+$/;
+                    if(comment)
+                    {
+                        var validcomment=comment.match(regxComment)
+                           if(!validcomment)
+                           {
+                            document.getElementById('errComment').innerHTML='Only Alphanumeric Characters are allowed';
+                           }
+                           else
+                           {
+                            document.getElementById('errComment').innerHTML='';
+                           }
+                    }       
+                    else
+                     {
+                         document.getElementById('errComment').innerHTML='';
+                     }
+                     /Ajax Code Starts/
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function()
+                    {
+                        if(this.readyState == 4 && this.status == 200)
+                            {
+                                document.getElementById("successMessage").innerHTML=this.responseText;
+                            }
+                    };
+                    xhttp.open("POST", "http://localhost:5000/add-visitors", true);
+                    xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("gender="+gender+"&age-group="+age+"&comments="+comment);
+
+                    /ajax code ends/
+            }
+
+
+
+
+
+        </script>
+
+
+
+
+
+
+
+
+
+    </body>
